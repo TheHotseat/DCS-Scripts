@@ -26,7 +26,7 @@ local m_resetable = false                               -- Whether or not the fl
 local m_fasterDetectionTimeFromMultipleContacts = false -- If multiple detector units can see the unit, the unit will be detected faster.
 
 local m_pollingTime = 5                                 -- Polling time in seconds for operations that need to be done quickly (unit detection).
-local m_slowPollingTime = 12                            -- Polling time in seconds for operations that don't need to be done quickly (unit list).
+local m_slowPollingTime = 60                            -- Polling time in seconds for operations that don't need to be done quickly (unit list).
 -------------------------------------------------------------------
 
 -- Debugging ------------------------------------------------------
