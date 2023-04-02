@@ -8,11 +8,14 @@ To activate the Marine Traffic Generator, add the phrase "[MARINE_TRAFFIC:true]"
 
 **Example**
 
-An example trigger zone name that activates the Marine Traffic Generator script to spawn ships as static objects would be "[MARINE_TRAFFIC:true][MT_SPAWN_AS_STATIC:true]". An example trigger zone name that activates the script to spawn ships as AI units would be "[MARINE_TRAFFIC:true]".
+An example trigger zone name that activates the Marine Traffic Generator script to spawn ships as static objects would be "[MARINE_TRAFFIC:true][MT_SPAWN_AS_STATIC:true]".
+An example trigger zone name that activates the script to spawn ships as AI units would be "[MARINE_TRAFFIC:true]".
 
 **Limitations**
-The Marine Traffic Generator script is currently limited to working only with the Persian Gulf map.
-AI units currently do not follow a path, they are immobile.
+
+- The Marine Traffic Generator script is currently only compatible with the Persian Gulf map.
+- AI units spawned by the script are currently stationary and do not follow a path.
+ -There is no option to limit the number of ships spawned in a zone. All ships within the zone will be spawned.
 
 **Notes**
 
