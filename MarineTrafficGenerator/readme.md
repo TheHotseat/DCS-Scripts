@@ -8,8 +8,9 @@ To activate the Marine Traffic Generator, add the phrase "[MARINE_TRAFFIC:true]"
 
 **Example**
 
-An example trigger zone name that activates the Marine Traffic Generator script to spawn ships as static objects would be "[MARINE_TRAFFIC:true][MT_SPAWN_AS_STATIC:true]".
-An example trigger zone name that activates the script to spawn ships as AI units would be "[MARINE_TRAFFIC:true]".
+An example trigger zone name that activates the Marine Traffic Generator script to spawn ships as static objects would be **"[MARINE_TRAFFIC:true][MT_SPAWN_AS_STATIC:true]"**.
+
+An example trigger zone name that activates the script to spawn ships as AI units would be **"[MARINE_TRAFFIC:true]"**.
 
 **Limitations**
 
