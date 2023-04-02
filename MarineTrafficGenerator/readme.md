@@ -16,7 +16,7 @@ An example trigger zone name that activates the script to spawn ships as AI unit
 
 - The Marine Traffic Generator script is currently only compatible with the Persian Gulf map.
 - AI units spawned by the script are currently stationary and do not follow a path.
- -There is no option to limit the number of ships spawned in a zone. All ships within the zone will be spawned.
+- There is no option to limit the number of ships spawned in a zone. All ships within the zone will be spawned.
 
 **Notes**
 
