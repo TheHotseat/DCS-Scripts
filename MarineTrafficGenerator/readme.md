@@ -4,7 +4,7 @@ The Marine Traffic Generator is a script that allows for the generation of ships
 
 **Usage**
 
-To activate the Marine Traffic Generator, add the phrase "[MARINE_TRAFFIC:true]" to the name of the trigger zone. To specify whether the ships should be spawned as static objects or AI units, you can include the parameter "[MT_SPAWN_AS_STATIC:true]" in the zone name to spawn the ships as static objects, or omit the parameter or include "[MT_SPAWN_AS_STATIC:false]" to spawn the ships as AI units.
+To activate the Marine Traffic Generator, add the phrase "[MARINE_TRAFFIC:true]" to the name of the trigger zone. To specify whether the ships should be spawned as static objects or AI units, you can include the parameter "[MT_SPAWN_AS_STATIC:true]" in the zone name to spawn the ships as static objects, or omit the parameter or include "[MT_SPAWN_AS_STATIC:false]" to spawn the ships as AI units. **Additionally, the "_shipDataPath" variable in the lua file must be changed to point to the PG_Static.csv file. The MissionScripting.lua found in C:\Program Files\Eagle Dynamics\DCS World OpenBeta\Scripts must be modified. The "sanitizeModule('io')" must be commented like so "--sanitizeModule('io')"** This is needed to load the CSV file containing the ship positions.
 
 **Example**
 
