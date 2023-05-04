@@ -4,6 +4,7 @@
 use crate::configuration_reader::Configuration;
 
 pub mod configuration_reader;
+pub mod dcs_directory_finder;
 pub mod file_monitor;
 pub mod lua_desanitizer;
 
@@ -34,6 +35,8 @@ const SERVICE_NAME: &str = "dcs_lua_desanitizer";
 const SERVICE_TYPE: ServiceType = ServiceType::OWN_PROCESS;
 const CONFIGURATION_FILE_PATH: &str =
     "C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\DcsLuaDesanitizer\\config.json";
+const FILE_POLLING_TIME_SEC: i32 = 1;
+const DIRECTORY_POLLING_TIME_SEC: i32 = 60;
 
 pub fn run() -> Result<()> {
     // Register generated `ffi_service_main` with the system and start the service, blocking
@@ -96,34 +99,37 @@ pub fn run_service() -> Result<()> {
     let configuration: Configuration =
         configuration_reader::get_configuration(CONFIGURATION_FILE_PATH);
 
-    loop {
-        // Poll shutdown event.
-        match shutdown_rx.recv_timeout(Duration::from_secs(configuration.polling_time)) {
-            // Break the loop either upon stop or channel disconnect
-            Ok(_) | Err(mpsc::RecvTimeoutError::Disconnected) => break,
+    'read_path: loop {
 
-            // Continue work if no events were received within the timeout
-            Err(mpsc::RecvTimeoutError::Timeout) => (),
-        };
+        loop {
+            // Poll shutdown event.
+            match shutdown_rx.recv_timeout(Duration::from_secs(FILE_POLLING_TIME_SEC)) {
+                // Break the loop either upon stop or channel disconnect
+                Ok(_) | Err(mpsc::RecvTimeoutError::Disconnected) => break 'read_path,
 
-        if !file_monitor::has_been_modified(&configuration.path, time_last_modified) {
-            continue;
-        }
+                // Continue work if no events were received within the timeout
+                Err(mpsc::RecvTimeoutError::Timeout) => (),
+            };
 
-        let script_to_desanitize = fs::read_to_string(&configuration.path)
-            .expect(&format!("Unable to read file: {}.", &configuration.path));
-
-        let desanitized_script = lua_desanitizer::desanitize(&script_to_desanitize);
-
-        match fs::write(&configuration.path, desanitized_script) {
-            Ok(_) => (),
-            Err(error) => {
-                println!("Error writing to {}, {}", &configuration.path, error);
+            if !file_monitor::has_been_modified(&configuration.path, time_last_modified) {
                 continue;
             }
-        }
 
-        time_last_modified = SystemTime::now();
+            let script_to_desanitize = fs::read_to_string(&configuration.path)
+                .expect(&format!("Unable to read file: {}.", &configuration.path));
+
+            let desanitized_script = lua_desanitizer::desanitize(&script_to_desanitize);
+
+            match fs::write(&configuration.path, desanitized_script) {
+                Ok(_) => (),
+                Err(error) => {
+                    println!("Error writing to {}, {}", &configuration.path, error);
+                    continue;
+                }
+            }
+
+            time_last_modified = SystemTime::now();
+        }
     }
 
     // Tell the system that service has stopped.
