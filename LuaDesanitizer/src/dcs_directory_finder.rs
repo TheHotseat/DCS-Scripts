@@ -17,22 +17,24 @@ pub fn get_mission_scripting_paths() -> Vec<String> {
 fn get_dcs_directories() -> Vec<String> {
     let mut paths: Vec<String> = Vec::new();
 
-    paths.push(get_path("SOFTWARE\\Eagle Dynamics\\DCS World OpenBeta"));
-    paths.push(get_path("SOFTWARE\\Eagle Dynamics\\DCS World"));
+    match get_path("SOFTWARE\\Eagle Dynamics\\DCS World OpenBeta") {
+        Ok(path) => paths.push(path),
+        _ => (),
+    }
+
+    match get_path("SOFTWARE\\Eagle Dynamics\\DCS World") {
+        Ok(path) => paths.push(path),
+        _ => (),
+    }
 
     return paths;
 }
 
-fn get_path(registry_key: &str) -> Option<String> {
+fn get_path(registry_key: &str) -> std::io::Result<String> {
     let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
 
-    match hklm.open_subkey(registry_key) {
-        Ok(registry_path) => match registry_path.get_value("Path") {
-            Ok(path) => return path,
-            Err(_) => (),
-        }
-        Err(_) => (),
-    }
-
-    return None;
+    let registry_path = hklm.open_subkey(registry_key)?;
+    let dcs_path = registry_path.get_value("Path")?;
+     
+    return Ok(dcs_path);
 }

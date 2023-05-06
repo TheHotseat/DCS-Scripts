@@ -35,8 +35,8 @@ const SERVICE_NAME: &str = "dcs_lua_desanitizer";
 const SERVICE_TYPE: ServiceType = ServiceType::OWN_PROCESS;
 const CONFIGURATION_FILE_PATH: &str =
     "C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\DcsLuaDesanitizer\\config.json";
-const FILE_POLLING_TIME_SEC: i32 = 1;
-const DIRECTORY_POLLING_TIME_SEC: i32 = 60;
+const FILE_POLLING_TIME_SEC: u64 = 1;
+const DIRECTORY_POLLING_TIME_SEC: u64 = 60;
 
 pub fn run() -> Result<()> {
     // Register generated `ffi_service_main` with the system and start the service, blocking
