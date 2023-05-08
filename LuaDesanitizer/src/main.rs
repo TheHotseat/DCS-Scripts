@@ -1,7 +1,6 @@
 // DCS Lua Desanitizer
 // Comments part of the MissionScripting.lua file to allow the use of any code in Lua scripts for DCS missions.
 
-pub mod configuration_reader;
 pub mod dcs_directory_finder;
 pub mod file_monitor;
 pub mod lua_desanitizer;
